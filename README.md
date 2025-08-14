@@ -46,3 +46,7 @@
           _end = .;
       }
       
+-------------------------------------------------------------------------------------------------------------
+# for test gpio device driver ?
+../Cortex-A_M_Architecture/linuxKernal_driver/CHAR_DEVICE_DRIVER/gpio_driver  
+echo <0/1> <pin-number> /dev/<device_name ? GPIO_koya>
