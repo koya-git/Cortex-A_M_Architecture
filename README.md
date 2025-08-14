@@ -48,5 +48,5 @@
       
 -------------------------------------------------------------------------------------------------------------
 # [test] ../Cortex-A_M_Architecture/linuxKernal_driver/CHAR_DEVICE_DRIVER/gpio_driver  
-   - echo 0 <pin-number> /dev/GPIO_koya                          ::   /* pin set low */
-   - echo 1 <pin-number> /dev/GPIO_koya                          ::   /* pin set high */
+   - echo 0 25 /dev/GPIO_koya                          ::   /* pin set low  @pin = 25*/
+   - echo 1 25 /dev/GPIO_koya                          ::   /* pin set high @pin = 25*/
