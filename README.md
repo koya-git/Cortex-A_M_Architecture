@@ -47,6 +47,6 @@
       }
       
 -------------------------------------------------------------------------------------------------------------
-# for test gpio device driver ?
-../Cortex-A_M_Architecture/linuxKernal_driver/CHAR_DEVICE_DRIVER/gpio_driver  
-echo <0/1> <pin-number> /dev/<device_name ? GPIO_koya>
+# [test] ../Cortex-A_M_Architecture/linuxKernal_driver/CHAR_DEVICE_DRIVER/gpio_driver  
+   - echo 0 <pin-number> /dev/GPIO_koya  /* pin set low */
+   - echo 1 <pin-number> /dev/GPIO_koya  /* pin set high */
