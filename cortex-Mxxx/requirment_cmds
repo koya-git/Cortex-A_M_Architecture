@@ -1,0 +1,14 @@
+sudo apt update
+
+#install toolchain for build binary code for ARM-CORTEX_M
+sudo apt insta
+
+#quemu install for test arm Cortex-M binarys
+sudo apt install qemu-system-arm
+
+#gdb debugger for multi architecture
+sudo apt install gdb-multiarch
+
+<!-- for setup gdb Dashboard  -->
+wget -P ~ https://github.com/cyrus-and/gdb-dashboard/raw/master/.gdbinit
+pip install pygments
