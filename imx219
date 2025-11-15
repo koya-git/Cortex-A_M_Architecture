@@ -22,6 +22,20 @@ dmesg | grep -i -e ov5647 -e imx219 -e imx477 -e unicam
 https://github.com/raspberrypi/linux/bl ... c/imx219.c
 https://github.com/raspberrypi/linux/bl ... 5-unicam.c
 
+sudo nano /etc/netplan/50-cloud-init.yaml
+network:
+  version: 2
+  renderer: networkd
+  ethernets:
+    eth0:
+      dhcp4: no
+      addresses:
+        - 192.168.1.50/24
+      gateway4: 192.168.1.1
+      nameservers:
+        addresses:
+          - 8.8.8.8
+          - 1.1.1.1
 
 
 
