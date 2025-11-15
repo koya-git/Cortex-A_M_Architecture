@@ -16,6 +16,7 @@ sudo depmod -a
 sudo nano /etc/modules
 echo mydriver | sudo tee /etc/modules-load.d/mydriver.conf
 
+dmesg | grep -i -e ov5647 -e imx219 -e imx477 -e unicam
 
 
 https://github.com/raspberrypi/linux/bl ... c/imx219.c
