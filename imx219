@@ -20,3 +20,69 @@ echo mydriver | sudo tee /etc/modules-load.d/mydriver.conf
 
 https://github.com/raspberrypi/linux/bl ... c/imx219.c
 https://github.com/raspberrypi/linux/bl ... 5-unicam.c
+
+
+
+
+
+
+============== send
+import cv2
+import socket
+import numpy as np
+
+# UDP target (receiver IP + port)
+UDP_IP = "192.168.1.6"   # CHANGE to receiver device IP
+UDP_PORT = 8081
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+
+cap = cv2.VideoCapture(2)  # your USB camera /dev/video2
+
+while True:
+    ret, frame = cap.read()
+    if not ret:
+        continue
+
+    # Encode frame to JPEG
+    encoded, buffer = cv2.imencode('.jpg', frame)
+
+    # Convert to bytes
+    data = buffer.tobytes()
+
+    # Send in chunks (UDP cannot send >64k packets)
+    MAX_DGRAM = 65000
+    for i in range(0, len(data), MAX_DGRAM):
+        sock.sendto(data[i:i+MAX_DGRAM], (UDP_IP, UDP_PORT))
+
+============================= recv
+import cv2
+import socket
+import struct
+import numpy as np
+
+UDP_PORT = 8081
+
+sock = socket.socket(socket.AF_INET, socket.SOCK_DGRAM)
+sock.bind(("", UDP_PORT))
+
+while True:
+    # Receive size header
+    size_data, addr = sock.recvfrom(4)
+    print(f"{size_data} :: {addr}")
+    frame_size = struct.unpack("!I", size_data)[0]
+
+    # Receive actual frame
+    frame_data, addr = sock.recvfrom(frame_size)
+
+    # Decode JPEG
+    np_data = np.frombuffer(frame_data, dtype=np.uint8)
+    frame = cv2.imdecode(np_data, cv2.IMREAD_COLOR)
+
+    if frame is not None:
+        cv2.imshow("UDP Camera Feed", frame)
+
+    if cv2.waitKey(1) & 0xFF == ord("q"):
+        break
+
+cv2.destroyAllWindows()
