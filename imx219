@@ -1,0 +1,22 @@
+ls /lib/modules/$(uname -r)/kernel/drivers/media/i2c/ | grep imx
+
+dtoverlay=imx219
+start_x=1
+gpu_mem=128
+
+
+sudo i2cdetect -y 10
+media-ctl -p -d /dev/media2
+
+v4l2-ctl --list-devices
+
+sudo cp mydriver.ko /lib/modules/$(uname -r)/kernel/drivers/
+sudo depmod -a
+
+sudo nano /etc/modules
+echo mydriver | sudo tee /etc/modules-load.d/mydriver.conf
+
+
+
+https://github.com/raspberrypi/linux/bl ... c/imx219.c
+https://github.com/raspberrypi/linux/bl ... 5-unicam.c
